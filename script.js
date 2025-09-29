@@ -1,58 +1,123 @@
-// console.log(123)
-// //переменнные
-// var nameVar = "value";
-// let nameLet = 'Value';
-// const nameConst = "Value";
+const list = document.getElementById('list')
+const search = document.getElementById('search')
+const btnSearch = document.getElementById('search-btn')
+const menu = document.getElementById('menu')
+let activeTag = 1
+const tags = [
+    {
+        id:1,
+        title:'Все'    
+    },
+    {
+        id:2,
+        title:'Идея'    
+    },
+    {
+        id:3,
+        title:'Личное'    
+    },
+    {
+        id:4,
+        title:'Работа'    
+    }]
+const notes = [
+    {
+    id:1,
+    title:'Сдать отчет',
+    tag: 'Работа',
+    updateAt: new Date().toDateString()//сделать сюда формат date string типа
+    },
+    {
+    id:2,
+    title:'Note 2',
+    tag: 'Работа',
+    updateAt: new Date().toDateString()
+    },
+    {
+    id:3,
+    title:'Note 2',
+    tag: 'Работа',
+    updateAt: new Date().toDateString()
+    }
 
+]
 
-
-
-// console.log(nameConst)
-
-// let str = "Значение переменной nameVar = " + nameVar
-// let str2 = 'Значение переменной nameVar = ' + nameVar
-// let str3 = `Значение переменной nameVar =  + ${nameVar + 32}`
-// let str4 = new String('Значение....')
-
-// let num = 1
-// let num2 = 1.1
-// let num3 = new Number(3)
-
-// let bool = true
-// let bool2 = false
-
-// let arr = [1, 2, 3, 4]
-// let arr2 = new Array(["asd", 'asda'])
-// let arr3 = [1, '4',true, [1,1,1]]
-
-// let obj = {
-//     name: 'Alex',
-//     age: 24,
-//     children: [
-//         {
-//             name: 'Kate',
-//             age: 2,
-//             children:[  ]
-//         }
-//     ]
-// }
-
-
-
-
-// console.log(person.name)
-// console.log(person.children[0].name)
-
-// function sum(x,y){
-//     const result = x + y;
-//     return result
-// }
-// const res = sum(1,2)
-// console.log(res)
-
-const btnNote = document.getElementById("btn-note")
-console.log(btnNote)
-function btnClichHandler(){
-    console.log("Вы гэй")
+function createTag(tag){
+    const element = document.createElement('li')
+    element.classList.add('list-container')
+    element.innerText = tag.title
+    return element
 }
-btnNote.addEventListener('click',btnClichHandler)
+
+
+
+function createNote(note){
+    const element = document.createElement('div')
+    element.classList.add("list_otch")
+
+    const title = document.createElement('span')
+    title.innerText = note.title
+    title.classList.add("list_otch-title")
+
+    const date = document.createElement('span')
+    date.classList.add("list_otch-date")
+    date.innerText = new Date()
+
+    const tag = document.createElement('span')
+    tag.classList.add("list_otch-tag")
+    tag.innerText = note.tag
+    
+    element.appendChild(title)
+    element.appendChild(date)
+    element.appendChild(tag)
+    return element
+}
+function getNotes(searchValue){
+    const filteredNotes =  notes.filter((i) => {
+        return i.title.startsWith(searchValue)
+    })
+    return filteredNotes
+}
+function renderMenu(){
+    for(let i of tags){
+        const element = createTag(tag)
+        element.addEventListener("click",() =>{
+            activeTag =tag.id
+            render()
+        })
+        menu.appendChild(element)
+    }
+}
+
+
+
+function render(){
+    list.innerHTML=''
+    let filtered=getNotes(search.value)
+
+    // let filtered = notes
+    if(activeTag!==1){
+        filtered=filtered.filter(i => i.tag===activeTag)
+
+    }
+    if(filtered.length === 0){
+        list.innerText = 'Ничего не найдено('
+        return
+    }
+    for (let i of filtered){
+        const element = createNote(i)
+        list.appendChild(element)
+    }
+
+}
+function init(){
+    // const list = document.getElementById('list')
+    // for (let i of notes){
+    //     const element = createNote(i)
+    //     list.appendChild(element)
+    // }
+    renderMenu()
+    render()
+    btnSearch.addEventListener('click',render)
+}
+init()

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
     <title>Document</title>
 </head>
 <body>
@@ -13,22 +13,22 @@
             <div class="menu_title">Мои Заметки</div>
             <button id="btn-note" class="menu_button">Новая Заметка</button>
             <h2>Теги</h2>
-            <ul class="list-container">
-            <li class="list-item active">Все</li>
+            <ul class="list-container" id="menu">
+            <!-- <li class="list-item active">Все</li>
             <li class="list-item">Идеи</li>
             <li class="list-item">Личное</li>
             <li class="list-item">Работа</li>
-            <li class="list-item">Список покупок</li>
+            <li class="list-item">Список покупок</li> -->
         </ul>
         </div>
 
         <div class="content">
             <div class="search">
-                <input class = 'forma_input' type = 'text' placeholder = 'Поиск'>
-                <button class="search_button"></button>
+                <input class = 'forma_input' type = 'text' placeholder = 'Поиск' id="search">
+                <button class="search_button" id = "search-btn"></button>
             </div>
-        <div class="list">
-            <div class="list_otch">
+        <div class="list" id="list">
+            <!-- <div class="list_otch">
                 <span class="list_otch-title">Сдать отчёт</span>
                 <span class="list_otch-date">23 Июля 2024</span>
                 <span class="list_otch-tag">Работа</span>
@@ -52,16 +52,12 @@
                 <span class="list_otch-title">Сдать отчёт</span>
                 <span class="list_otch-date">23 Июля 2024</span>
                 <span class="list_otch-tag">Работа</span>
-            </div>
-
-
-
+            </div> -->
         </div>
     
 
             
         </div>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>
