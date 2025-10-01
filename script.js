@@ -6,7 +6,7 @@ let activeTag = 1
 const tags = [
     {
         id:1,
-        title:'Все'    
+        title:'Все'   
     },
     {
         id:2,
@@ -24,27 +24,33 @@ const notes = [
     {
     id:1,
     title:'Сдать отчет',
-    tag: 'Работа',
+    tag: 4,
     updateAt: new Date().toDateString()//сделать сюда формат date string типа
     },
     {
     id:2,
     title:'Note 2',
-    tag: 'Работа',
+    tag: 3,
     updateAt: new Date().toDateString()
     },
     {
     id:3,
     title:'Note 2',
-    tag: 'Работа',
+    tag: 3,
     updateAt: new Date().toDateString()
     }
 
 ]
+search.addEventListener('keydown', function(event) { //Поиск по нажатию Enter
+    if (event.key === 'Enter' || event.keyCode === 13) {
+    event.preventDefault(); // Предотвращаем стандартное действие Enter
+    btnSearch.click();   // Имитируем клик по кнопке
+}
+});
 
 function createTag(tag){
     const element = document.createElement('li')
-    element.classList.add('list-container')
+    element.classList.add('list-item')
     element.innerText = tag.title
     return element
 }
@@ -61,11 +67,12 @@ function createNote(note){
 
     const date = document.createElement('span')
     date.classList.add("list_otch-date")
-    date.innerText = new Date()
+    date.innerText = new Date().toDateString()
 
     const tag = document.createElement('span')
     tag.classList.add("list_otch-tag")
-    tag.innerText = note.tag
+    tag.innerText = tags.find( obj => obj.id === note.tag).title
+    
     
     element.appendChild(title)
     element.appendChild(date)
@@ -79,10 +86,10 @@ function getNotes(searchValue){
     return filteredNotes
 }
 function renderMenu(){
-    for(let i of tags){
+    for(let tag of tags){
         const element = createTag(tag)
         element.addEventListener("click",() =>{
-            activeTag =tag.id
+            activeTag = tag.id
             render()
         })
         menu.appendChild(element)
@@ -96,8 +103,8 @@ function render(){
     let filtered=getNotes(search.value)
 
     // let filtered = notes
-    if(activeTag!==1){
-        filtered=filtered.filter(i => i.tag===activeTag)
+    if (activeTag !== 1){
+        filtered=filtered.filter(i => i.tag === activeTag)
 
     }
     if(filtered.length === 0){
